@@ -320,10 +320,9 @@
             const iconContainer = document.createElement('div');
             iconContainer.className = 'icon-container';
             
-            // Usar a URL de renderização de itens do Albion
-            const itemCode = getAlbionItemCode(activityKey);
+            // Usar a URL de renderização de itens do Albion com o código de item da configuração
             const img = document.createElement('img');
-            img.src = `https://render.albiononline.com/v1/item/${itemCode}`;
+            img.src = `https://render.albiononline.com/v1/item/${activity.itemCode || getAlbionItemCode(activityKey)}`;
             img.alt = activity.label;
             img.className = 'activity-img';
             img.onerror = function() {

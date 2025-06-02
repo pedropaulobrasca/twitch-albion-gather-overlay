@@ -4,37 +4,43 @@
       "bits": 46,
       "durationMinutes": 5,
       "icon": "pickaxe.png",
-      "label": "Mineração"
+      "label": "Mineração",
+      "itemCode": "T8_2H_TOOL_PICK"
     },
     "fishing": {
       "bits": 13,
       "durationMinutes": 5,
       "icon": "fishing-rod.png",
-      "label": "Pesca"
+      "label": "Pesca",
+      "itemCode": "T8_2H_TOOL_FISHINGROD"
     },
     "woodcutting": {
       "bits": 48,
       "durationMinutes": 5,
       "icon": "axe.png",
-      "label": "Corte de Madeira"
+      "label": "Corte de Madeira",
+      "itemCode": "T8_2H_TOOL_AXE"
     },
     "skinning": {
       "bits": 47,
       "durationMinutes": 5,
-      "icon": "skinning-knife.png", 
-      "label": "Esfolamento"
+      "icon": "skinning-knife.png",
+      "label": "Esfolamento",
+      "itemCode": "T8_2H_TOOL_KNIFE"
     },
     "herbalism": {
       "bits": 45,
       "durationMinutes": 5,
       "icon": "sickle.png",
-      "label": "Herbalismo"
+      "label": "Herbalismo",
+      "itemCode": "T8_2H_TOOL_SICKLE"
     },
     "quarrying": {
       "bits": 100,
       "durationMinutes": 5,
       "icon": "hammer.png",
-      "label": "Pedreira"
+      "label": "Pedreira",
+      "itemCode": "T8_2H_TOOL_HAMMER"
     }
   }
-} 
+}
