@@ -1,0 +1,29 @@
+### Variáveis
+@baseUrl = http://localhost:3001
+
+### Listar todas as atividades e bloqueios ativos
+GET {{baseUrl}}/teste/listar
+
+### Simular bits para bloquear mineração (mining)
+GET {{baseUrl}}/teste/bits/mining/46
+
+### Simular bits para bloquear pesca (fishing)
+GET {{baseUrl}}/teste/bits/fishing/13
+
+### Simular bits para bloquear corte de madeira (woodcutting)
+GET {{baseUrl}}/teste/bits/woodcutting/48
+
+### Simular bits para bloquear esfolamento (skinning)
+GET {{baseUrl}}/teste/bits/skinning/47
+
+### Simular bits para bloquear herbalismo (herbalism)
+GET {{baseUrl}}/teste/bits/herbalism/45
+
+### Simular bits para bloquear pedreira (quarrying)
+GET {{baseUrl}}/teste/bits/quarrying/100
+
+### Obter estado atual da aplicação
+GET {{baseUrl}}/api/status
+
+### Acessar o overlay (abra este link no navegador)
+# {{baseUrl}}/overlay

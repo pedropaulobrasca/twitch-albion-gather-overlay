@@ -1,0 +1,40 @@
+{
+  "activities": {
+    "mining": {
+      "bits": 46,
+      "durationMinutes": 5,
+      "icon": "pickaxe.png",
+      "label": "Mineração"
+    },
+    "fishing": {
+      "bits": 13,
+      "durationMinutes": 5,
+      "icon": "fishing-rod.png",
+      "label": "Pesca"
+    },
+    "woodcutting": {
+      "bits": 48,
+      "durationMinutes": 5,
+      "icon": "axe.png",
+      "label": "Corte de Madeira"
+    },
+    "skinning": {
+      "bits": 47,
+      "durationMinutes": 5,
+      "icon": "skinning-knife.png", 
+      "label": "Esfolamento"
+    },
+    "herbalism": {
+      "bits": 45,
+      "durationMinutes": 5,
+      "icon": "sickle.png",
+      "label": "Herbalismo"
+    },
+    "quarrying": {
+      "bits": 100,
+      "durationMinutes": 5,
+      "icon": "hammer.png",
+      "label": "Pedreira"
+    }
+  }
+} 
