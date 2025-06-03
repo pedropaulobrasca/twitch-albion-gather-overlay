@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurações - Albion Gather Overlay</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <style>
+    body {
+      background-color: #18181b;
+      color: #e4e4e7;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
+    .sidebar {
+      background-color: #27272a;
+      min-height: 100vh;
+      padding-top: 1rem;
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      color: #e4e4e7;
+      text-decoration: none;
+      border-radius: 0.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .sidebar-link:hover {
+      background-color: #3f3f46;
+      color: #fff;
+    }
+    .sidebar-link.active {
+      background-color: #7d2df0;
+      color: #fff;
+    }
+    .sidebar-icon {
+      font-size: 1.25rem;
+      margin-right: 0.75rem;
+    }
+    .content {
+      padding: 2rem;
+    }
+    .card {
+      background-color: #27272a;
+      border: none;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .card-header {
+      background-color: #2d2d30;
+      border-bottom: 1px solid #3f3f46;
+      padding: 1rem 1.5rem;
+    }
+    .card-body {
+      padding: 1.5rem;
+    }
+    .btn-primary {
+      background-color: #9146ff;
+      border-color: #9146ff;
+    }
+    .btn-primary:hover {
+      background-color: #7d2df0;
+      border-color: #7d2df0;
+    }
+    .user-avatar {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+    }
+    .activity-item {
+      background-color: #3f3f46;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .activity-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .form-control, .form-select {
+      background-color: #2d2d30;
+      border-color: #4b4b55;
+      color: #e4e4e7;
+    }
+    .form-control:focus, .form-select:focus {
+      background-color: #2d2d30;
+      border-color: #9146ff;
+      color: #e4e4e7;
+      box-shadow: 0 0 0 0.25rem rgba(145, 70, 255, 0.25);
+    }
+    .form-label {
+      margin-bottom: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 col-lg-2 px-0 sidebar">
+        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+          <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <span class="fs-5 d-none d-sm-inline">Albion Overlay</span>
+          </a>
+          <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100" id="menu">
+            <li class="nav-item w-100">
+              <a href="/dashboard" class="sidebar-link <%= active === 'dashboard' ? 'active' : '' %>">
+                <i class="bi bi-speedometer2 sidebar-icon"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item w-100">
+              <a href="/settings" class="sidebar-link <%= active === 'settings' ? 'active' : '' %>">
+                <i class="bi bi-gear sidebar-icon"></i>
+                <span>Configurações</span>
+              </a>
+            </li>
+            <li class="nav-item w-100">
+              <a href="/overlay-url" class="sidebar-link <%= active === 'overlay' ? 'active' : '' %>">
+                <i class="bi bi-tv sidebar-icon"></i>
+                <span>Overlay</span>
+              </a>
+            </li>
+            <li class="nav-item w-100">
+              <a href="/profile" class="sidebar-link <%= active === 'profile' ? 'active' : '' %>">
+                <i class="bi bi-person sidebar-icon"></i>
+                <span>Perfil</span>
+              </a>
+            </li>
+            <li class="nav-item w-100">
+              <a href="/subscription" class="sidebar-link <%= active === 'subscription' ? 'active' : '' %>">
+                <i class="bi bi-credit-card sidebar-icon"></i>
+                <span>Assinatura</span>
+              </a>
+            </li>
+          </ul>
+          <hr>
+          <div class="dropdown pb-4">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="<%= user.profileImage || 'https://via.placeholder.com/35' %>" alt="<%= user.displayName %>" class="user-avatar">
+              <span class="d-none d-sm-inline mx-1"><%= user.displayName %></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+              <li><a class="dropdown-item" href="/profile">Perfil</a></li>
+              <li><a class="dropdown-item" href="/subscription">Assinatura</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="/logout">Sair</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Main Content -->
+      <div class="col-md-9 col-lg-10 content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2>Configurações</h2>
+          <div>
+            <button type="button" class="btn btn-primary" id="saveBtn">
+              <i class="bi bi-save me-2"></i> Salvar Alterações
+            </button>
+          </div>
+        </div>
+        
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Atividades de Coleta</h5>
+            <% if (user.hasPremiumAccess()) { %>
+              <button type="button" class="btn btn-sm btn-outline-light" id="addActivityBtn">
+                <i class="bi bi-plus"></i> Adicionar Atividade
+              </button>
+            <% } %>
+          </div>
+          <div class="card-body">
+            <form id="settingsForm">
+              <div id="activitiesContainer">
+                <% Object.entries(config.activities || {}).forEach(([key, activity]) => { %>
+                  <div class="activity-item" data-key="<%= key %>">
+                    <div class="activity-item-header">
+                      <h5 class="mb-0"><%= activity.label %></h5>
+                      <button type="button" class="btn btn-sm btn-outline-danger remove-activity-btn">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                    <div class="row mb-3">
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label class="form-label">Nome da Atividade</label>
+                          <input type="text" class="form-control" name="label" value="<%= activity.label %>">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label class="form-label">ID (sem espaços)</label>
+                          <input type="text" class="form-control" name="key" value="<%= key %>" <%= user.hasPremiumAccess() ? '' : 'readonly' %>>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label class="form-label">Bits Necessários</label>
+                          <input type="number" class="form-control" name="bits" value="<%= activity.bits %>">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label class="form-label">Duração do Bloqueio (minutos)</label>
+                          <input type="number" class="form-control" name="durationMinutes" value="<%= activity.durationMinutes %>">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% }); %>
+              </div>
+              
+              <% if (!user.hasPremiumAccess()) { %>
+                <div class="alert alert-info">
+                  <i class="bi bi-info-circle me-2"></i> Faça upgrade para o plano Premium para adicionar atividades personalizadas e editar todos os campos.
+                </div>
+              <% } %>
+            </form>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">Configurações Avançadas</h5>
+          </div>
+          <div class="card-body">
+            <div class="form-check form-switch mb-3">
+              <input class="form-check-input" type="checkbox" id="showDonorName" checked>
+              <label class="form-check-label" for="showDonorName">Mostrar nome do doador</label>
+            </div>
+            <div class="form-check form-switch mb-3">
+              <input class="form-check-input" type="checkbox" id="showBitsAmount" checked>
+              <label class="form-check-label" for="showBitsAmount">Mostrar quantidade de bits</label>
+            </div>
+            <div class="form-check form-switch mb-3">
+              <input class="form-check-input" type="checkbox" id="playSoundEffect" checked>
+              <label class="form-check-label" for="playSoundEffect">Tocar efeito sonoro</label>
+            </div>
+            
+            <% if (!user.hasPremiumAccess()) { %>
+              <div class="alert alert-warning mt-3">
+                <i class="bi bi-exclamation-triangle me-2"></i> Algumas configurações avançadas estão disponíveis apenas para assinantes Premium.
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Template para novas atividades -->
+  <template id="activityTemplate">
+    <div class="activity-item" data-key="new-activity">
+      <div class="activity-item-header">
+        <h5 class="mb-0">Nova Atividade</h5>
+        <button type="button" class="btn btn-sm btn-outline-danger remove-activity-btn">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">Nome da Atividade</label>
+            <input type="text" class="form-control" name="label" value="Nova Atividade">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">ID (sem espaços)</label>
+            <input type="text" class="form-control" name="key" value="nova_atividade">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">Bits Necessários</label>
+            <input type="number" class="form-control" name="bits" value="100">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">Duração do Bloqueio (minutos)</label>
+            <input type="number" class="form-control" name="durationMinutes" value="5">
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const activitiesContainer = document.getElementById('activitiesContainer');
+      const addActivityBtn = document.getElementById('addActivityBtn');
+      const activityTemplate = document.getElementById('activityTemplate');
+      const saveBtn = document.getElementById('saveBtn');
+      
+      // Adicionar nova atividade
+      if (addActivityBtn) {
+        addActivityBtn.addEventListener('click', function() {
+          const newActivity = document.importNode(activityTemplate.content, true);
+          activitiesContainer.appendChild(newActivity);
+          
+          // Atualizar os listeners para os novos botões
+          addRemoveButtonListeners();
+        });
+      }
+      
+      // Remover atividade
+      function addRemoveButtonListeners() {
+        document.querySelectorAll('.remove-activity-btn').forEach(button => {
+          button.addEventListener('click', function() {
+            if (confirm('Tem certeza que deseja remover esta atividade?')) {
+              const activityItem = this.closest('.activity-item');
+              activityItem.remove();
+            }
+          });
+        });
+      }
+      
+      // Inicializar listeners para botões de remoção
+      addRemoveButtonListeners();
+      
+      // Salvar configurações
+      saveBtn.addEventListener('click', function() {
+        const activities = {};
+        
+        // Coletar dados de todas as atividades
+        document.querySelectorAll('.activity-item').forEach(item => {
+          const key = item.querySelector('input[name="key"]').value;
+          const label = item.querySelector('input[name="label"]').value;
+          const bits = parseInt(item.querySelector('input[name="bits"]').value);
+          const durationMinutes = parseInt(item.querySelector('input[name="durationMinutes"]').value);
+          
+          activities[key] = {
+            label,
+            bits,
+            durationMinutes
+          };
+        });
+        
+        // Enviar dados para o servidor
+        fetch('/settings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ activities })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Configurações salvas com sucesso!');
+          } else {
+            alert('Erro ao salvar configurações: ' + data.error);
+          }
+        })
+        .catch(error => {
+          console.error('Erro:', error);
+          alert('Erro ao salvar configurações');
+        });
+      });
+    });
+  </script>
+</body>
+</html> 

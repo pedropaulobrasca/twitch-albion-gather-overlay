@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: albion-overlay-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: senha_secreta
+      MONGO_INITDB_DATABASE: albion-overlay
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: albion-overlay-mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: senha_secreta
+      ME_CONFIG_MONGODB_URL: mongodb://root:senha_secreta@mongodb:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: senha_admin
+    depends_on:
+      - mongodb
+
+volumes:
+  mongodb_data:
+    name: albion-overlay-mongodb-data 

@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:dev": "npm run docker:up && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -18,10 +21,18 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^4.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mongoose": "^7.1.0",
+    "passport": "^0.6.0",
+    "passport-twitch-new": "^0.0.2",
     "socket.io": "^4.6.1",
+    "stripe": "^12.2.0",
     "tmi.js": "^1.8.5"
   },
   "devDependencies": {

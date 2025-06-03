@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Albion Gather Overlay</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <style>
+    body {
+      background-color: #18181b;
+      color: #e4e4e7;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
+    .sidebar {
+      background-color: #27272a;
+      min-height: 100vh;
+      padding-top: 1rem;
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      color: #e4e4e7;
+      text-decoration: none;
+      border-radius: 0.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .sidebar-link:hover {
+      background-color: #3f3f46;
+      color: #fff;
+    }
+    .sidebar-link.active {
+      background-color: #7d2df0;
+      color: #fff;
+    }
+    .sidebar-icon {
+      font-size: 1.25rem;
+      margin-right: 0.75rem;
+    }
+    .content {
+      padding: 2rem;
+    }
+    .card {
+      background-color: #27272a;
+      border: none;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .card-header {
+      background-color: #2d2d30;
+      border-bottom: 1px solid #3f3f46;
+      padding: 1rem 1.5rem;
+    }
+    .card-body {
+      padding: 1.5rem;
+    }
+    .navbar {
+      background-color: #27272a;
+      border-bottom: 1px solid #3f3f46;
+    }
+    .status-circle {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+    .status-active {
+      background-color: #10b981;
+    }
+    .status-inactive {
+      background-color: #ef4444;
+    }
+    .btn-primary {
+      background-color: #9146ff;
+      border-color: #9146ff;
+    }
+    .btn-primary:hover {
+      background-color: #7d2df0;
+      border-color: #7d2df0;
+    }
+    .user-avatar {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+    }
+    .stat-card {
+      border-left: 4px solid;
+      height: 100%;
+    }
+    .stat-card.viewers {
+      border-color: #9146ff;
+    }
+    .stat-card.blocks {
+      border-color: #10b981;
+    }
+    .stat-card.bits {
+      border-color: #3b82f6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 col-lg-2 px-0 sidebar">
+        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+          <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <span class="fs-5 d-none d-sm-inline">Albion Overlay</span>
+          </a>
+          <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100" id="menu">
+            <li class="nav-item w-100">
+              <a href="/dashboard" class="sidebar-link <%= active === 'dashboard' ? 'active' : '' %>">
+                <i class="bi bi-speedometer2 sidebar-icon"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item w-100">
+              <a href="/settings" class="sidebar-link <%= active === 'settings' ? 'active' : '' %>">
+                <i class="bi bi-gear sidebar-icon"></i>
+                <span>Configurações</span>
+              </a>
+            </li>
+            <li class="nav-item w-100">
+              <a href="/overlay-url" class="sidebar-link <%= active === 'overlay' ? 'active' : '' %>">
+                <i class="bi bi-tv sidebar-icon"></i>
+                <span>Overlay</span>
+              </a>
+            </li>
+            <li class="nav-item w-100">
+              <a href="/profile" class="sidebar-link <%= active === 'profile' ? 'active' : '' %>">
+                <i class="bi bi-person sidebar-icon"></i>
+                <span>Perfil</span>
+              </a>
+            </li>
+            <li class="nav-item w-100">
+              <a href="/subscription" class="sidebar-link <%= active === 'subscription' ? 'active' : '' %>">
+                <i class="bi bi-credit-card sidebar-icon"></i>
+                <span>Assinatura</span>
+              </a>
+            </li>
+          </ul>
+          <hr>
+          <div class="dropdown pb-4">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="<%= user.profileImage || 'https://via.placeholder.com/35' %>" alt="<%= user.displayName %>" class="user-avatar">
+              <span class="d-none d-sm-inline mx-1"><%= user.displayName %></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+              <li><a class="dropdown-item" href="/profile">Perfil</a></li>
+              <li><a class="dropdown-item" href="/subscription">Assinatura</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="/logout">Sair</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Main Content -->
+      <div class="col-md-9 col-lg-10 content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2>Dashboard</h2>
+          <div>
+            <span class="status-circle <%= user.hasActiveSubscription() ? 'status-active' : 'status-inactive' %>"></span>
+            <span><%= user.hasActiveSubscription() ? 'Assinatura ativa' : 'Assinatura inativa' %> (<%= user.subscription.plan %>)</span>
+          </div>
+        </div>
+        
+        <!-- Stats Cards -->
+        <div class="row mb-4">
+          <div class="col-md-4 mb-3">
+            <div class="card stat-card viewers">
+              <div class="card-body">
+                <h5 class="card-title">Canal</h5>
+                <p class="card-text fs-4 fw-bold"><%= user.username %></p>
+                <small class="text-muted">Conectado via Twitch</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="card stat-card blocks">
+              <div class="card-body">
+                <h5 class="card-title">Status do Overlay</h5>
+                <p class="card-text fs-4 fw-bold">Ativo</p>
+                <small class="text-muted">Pronto para uso</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="card stat-card bits">
+              <div class="card-body">
+                <h5 class="card-title">Validade</h5>
+                <p class="card-text fs-4 fw-bold"><%= new Date(user.subscription.validUntil).toLocaleDateString() %></p>
+                <small class="text-muted">Plano <%= user.subscription.plan %></small>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="mb-0">Ações Rápidas</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <a href="/settings" class="btn btn-outline-light w-100">
+                  <i class="bi bi-gear me-2"></i>Configurações
+                </a>
+              </div>
+              <div class="col-md-3 mb-3">
+                <a href="/overlay-url" class="btn btn-outline-light w-100">
+                  <i class="bi bi-tv me-2"></i>Ver Overlay
+                </a>
+              </div>
+              <div class="col-md-3 mb-3">
+                <button class="btn btn-outline-light w-100" id="testBtn">
+                  <i class="bi bi-play me-2"></i>Testar
+                </button>
+              </div>
+              <div class="col-md-3 mb-3">
+                <a href="/subscription" class="btn btn-primary w-100">
+                  <i class="bi bi-arrow-up-circle me-2"></i>Upgrade
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Getting Started Guide -->
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">Guia de Início Rápido</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h5 class="mb-3">Como configurar o overlay:</h5>
+                <ol class="ps-3">
+                  <li class="mb-2">Vá para <a href="/settings" class="text-light">Configurações</a> e personalize as atividades</li>
+                  <li class="mb-2">Copie o URL do overlay na página <a href="/overlay-url" class="text-light">Overlay</a></li>
+                  <li class="mb-2">No OBS Studio, adicione uma nova "Fonte de Navegador"</li>
+                  <li class="mb-2">Cole o URL do overlay e marque "Fundo Transparente"</li>
+                  <li class="mb-2">Ajuste o tamanho para cerca de 200px de largura e 600px de altura</li>
+                </ol>
+              </div>
+              <div class="col-md-6">
+                <h5 class="mb-3">Como funciona:</h5>
+                <ul class="ps-3">
+                  <li class="mb-2">Quando um espectador doa bits, uma atividade é bloqueada</li>
+                  <li class="mb-2">O bloqueio dura pelo tempo configurado nas configurações</li>
+                  <li class="mb-2">Os espectadores podem usar o comando <code>!bloqueios</code> no chat para ver quais atividades estão bloqueadas</li>
+                  <li class="mb-2">Você pode personalizar valores de bits e duração de bloqueios nas configurações</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Script para testar o overlay
+    document.getElementById('testBtn').addEventListener('click', function() {
+      fetch('/teste/bits/mining/100')
+        .then(response => response.json())
+        .then(data => {
+          alert('Teste enviado: ' + data.message);
+        })
+        .catch(error => {
+          console.error('Erro ao testar:', error);
+          alert('Erro ao testar o overlay');
+        });
+    });
+  </script>
+</body>
+</html> 

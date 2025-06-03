@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Albion Gather Overlay</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <style>
+    body {
+      background-color: #18181b;
+      color: #e4e4e7;
+      font-family: 'Inter', sans-serif;
+    }
+    .hero {
+      background: linear-gradient(135deg, #6441a5 0%, #9146ff 100%);
+      color: white;
+      padding: 80px 0;
+      margin-bottom: 40px;
+    }
+    .feature-card {
+      background-color: #27272a;
+      border-radius: 8px;
+      padding: 24px;
+      height: 100%;
+      transition: transform 0.2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #9146ff;
+    }
+    .pricing-card {
+      background-color: #27272a;
+      border-radius: 8px;
+      padding: 24px;
+      height: 100%;
+      border: 1px solid #3f3f46;
+    }
+    .pricing-header {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .pricing-price {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #9146ff;
+    }
+    .pricing-feature {
+      margin-bottom: 8px;
+    }
+    .btn-twitch {
+      background-color: #9146ff;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      font-weight: bold;
+    }
+    .btn-twitch:hover {
+      background-color: #7d2df0;
+      color: white;
+    }
+    .navbar {
+      background-color: #18181b;
+    }
+    .footer {
+      background-color: #27272a;
+      padding: 40px 0;
+      margin-top: 80px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">Albion Gather Overlay</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <% if (user) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard">Painel</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Sair</a>
+            </li>
+          <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link btn btn-twitch" href="/auth/twitch">Entrar com Twitch</a>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container text-center">
+      <h1 class="display-4 fw-bold mb-4">Overlay Interativo para Albion Online</h1>
+      <p class="lead mb-5">Permita que seus espectadores interajam com sua gameplay bloqueando atividades de coleta através de doações de bits.</p>
+      <% if (!user) { %>
+        <a href="/auth/twitch" class="btn btn-light btn-lg fw-bold px-5 py-3">
+          <i class="bi bi-twitch me-2"></i> Conectar com Twitch
+        </a>
+      <% } else { %>
+        <a href="/dashboard" class="btn btn-light btn-lg fw-bold px-5 py-3">
+          Acessar Painel
+        </a>
+      <% } %>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="container mb-5">
+    <h2 class="text-center mb-5">Recursos Principais</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="bi bi-controller"></i>
+          </div>
+          <h3>Interação com Espectadores</h3>
+          <p>Permita que seus espectadores participem ativamente da sua gameplay através de doações de bits.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="bi bi-gear-fill"></i>
+          </div>
+          <h3>Personalização Completa</h3>
+          <p>Configure quais atividades podem ser bloqueadas, valores de bits e duração do bloqueio.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="bi bi-bar-chart-fill"></i>
+          </div>
+          <h3>Integração com OBS</h3>
+          <p>Fácil integração com OBS Studio como fonte de navegador para uma experiência de stream perfeita.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="container mb-5">
+    <h2 class="text-center mb-5">Planos de Assinatura</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="pricing-card">
+          <div class="pricing-header">Gratuito</div>
+          <div class="pricing-price">R$ 0</div>
+          <div class="pricing-features mb-4">
+            <div class="pricing-feature"><i class="bi bi-check-circle-fill text-success me-2"></i> 7 dias de teste</div>
+            <div class="pricing-feature"><i class="bi bi-check-circle-fill text-success me-2"></i> Recursos básicos</div>
+            <div class="pricing-feature"><i class="bi bi-x-circle-fill text-danger me-2"></i> Sem personalização</div>
+            <div class="pricing-feature"><i class="bi bi-x-circle-fill text-danger me-2"></i> Marcas d'água</div>
+          </div>
+          <a href="/auth/twitch" class="btn btn-outline-light d-block">Começar Agora</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="pricing-card">
+          <div class="pricing-header">Básico</div>
+          <div class="pricing-price">R$ 9,90<small>/mês</small></div>
+          <div class="pricing-features mb-4">
+            <div class="pricing-feature"><i class="bi bi-check-circle-fill text-success me-2"></i> Sem marcas d'água</div>
+            <div class="pricing-feature"><i class="bi bi-check-circle-fill text-success me-2"></i> Personalização básica</div>
+            <div class="pricing-feature"><i class="bi bi-check-circle-fill text-success me-2"></i> Suporte via email</div>
+            <div class="pricing-feature"><i class="bi bi-x-circle-fill text-danger me-2"></i> Recursos avançados</div>
+          </div>
+          <a href="/auth/twitch" class="btn btn-twitch d-block">Assinar Agora</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="pricing-card">
+          <div class="pricing-header">Premium</div>
+          <div class="pricing-price">R$ 19,90<small>/mês</small></div>
+          <div class="pricing-features mb-4">
+            <div class="pricing-feature"><i class="bi bi-check-circle-fill text-success me-2"></i> Todos os recursos</div>
+            <div class="pricing-feature"><i class="bi bi-check-circle-fill text-success me-2"></i> Personalização avançada</div>
+            <div class="pricing-feature"><i class="bi bi-check-circle-fill text-success me-2"></i> Suporte prioritário</div>
+            <div class="pricing-feature"><i class="bi bi-check-circle-fill text-success me-2"></i> Recursos exclusivos</div>
+          </div>
+          <a href="/auth/twitch" class="btn btn-twitch d-block">Assinar Agora</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Albion Gather Overlay</h5>
+          <p>Uma ferramenta interativa para streamers de Albion Online.</p>
+        </div>
+        <div class="col-md-3">
+          <h5>Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="/" class="text-decoration-none text-light">Início</a></li>
+            <li><a href="/dashboard" class="text-decoration-none text-light">Painel</a></li>
+            <li><a href="#" class="text-decoration-none text-light">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h5>Contato</h5>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-decoration-none text-light">Suporte</a></li>
+            <li><a href="#" class="text-decoration-none text-light">Discord</a></li>
+            <li><a href="#" class="text-decoration-none text-light">Twitter</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr class="mt-4 mb-4">
+      <div class="text-center">
+        <p>© 2023 Albion Gather Overlay. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
