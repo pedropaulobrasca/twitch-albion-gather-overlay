@@ -2,22 +2,6 @@
 
 Este projeto consiste em um overlay interativo para streams de Albion Online na Twitch. O overlay permite que os espectadores interajam com a gameplay do streamer através de doações de bits, bloqueando temporariamente atividades de coleta (mineração, pesca, corte de madeira, etc).
 
-## Novidade: Aplicativo Desktop!
-
-Agora disponível como um aplicativo desktop fácil de usar! Não é mais necessário configurar manualmente ou usar linha de comando.
-
-### Características do Aplicativo:
-- Interface gráfica amigável
-- Configuração simplificada
-- Painel de controle com logs
-- Gerenciamento visual das atividades
-- Testes sem uso de bits reais
-- Integração com OBS Studio
-
-### Download
-
-Faça o download da versão mais recente na [página de releases](https://github.com/seurepo/twitch-albion-gather-overlay/releases).
-
 ## Funcionalidades
 
 - Exibição de ícones para as diferentes atividades de coleta do Albion Online
@@ -27,33 +11,9 @@ Faça o download da versão mais recente na [página de releases](https://github
 - Efeitos sonoros quando uma atividade é bloqueada
 - Mostrar o nome do doador e quantidade de bits doados
 
-## Como Usar o Aplicativo
+## Como Usar
 
-1. Baixe e instale o aplicativo da [página de releases](https://github.com/seurepo/twitch-albion-gather-overlay/releases)
-2. Abra o aplicativo
-3. Na aba **Configurações**, adicione:
-   - Seu nome de usuário da Twitch
-   - Token OAuth (obtenha em https://twitchapps.com/tmi/)
-4. Na aba **Atividades**, configure os valores de bits e duração de bloqueio para cada atividade
-5. Na aba **Dashboard**, clique em "Iniciar Servidor"
-6. Copie a URL do overlay e adicione como "Fonte de Navegador" no OBS Studio
-
-### Configuração no OBS
-
-1. No OBS, adicione uma nova "Fonte de Navegador"
-2. Coloque a URL do overlay (padrão: `http://localhost:3001/overlay`)
-3. Marque a opção "Fundo transparente"
-4. Ajuste a largura para aproximadamente 200px e a altura para 600px
-
-## Para Desenvolvedores
-
-### Requisitos
-
-- Node.js v14+
-- NPM ou Yarn
-- Electron (para o aplicativo desktop)
-
-### Instalação para Desenvolvimento
+### Instalação
 
 1. Clone o repositório:
 ```
@@ -66,20 +26,66 @@ cd twitch-albion-gather-overlay
 npm install
 ```
 
-3. Execute o aplicativo em modo de desenvolvimento:
+3. Configure o arquivo `.env` com suas credenciais (copie de `env.example`):
+```
+cp env.example .env
+```
+
+4. Edite o arquivo `.env` com:
+   - Seu nome de usuário da Twitch
+   - Token OAuth (obtenha em https://twitchapps.com/tmi/)
+   - Porta do servidor (padrão: 3001)
+
+5. Inicie o servidor:
 ```
 npm start
 ```
 
-### Construir o Aplicativo
+6. Seu overlay estará disponível em `http://localhost:3001/overlay`
 
-Para construir o aplicativo para distribuição:
+### Configuração no OBS
 
+1. No OBS, adicione uma nova "Fonte de Navegador"
+2. Coloque a URL do overlay (padrão: `http://localhost:3001/overlay`)
+3. Marque a opção "Fundo transparente"
+4. Ajuste a largura para aproximadamente 200px e a altura para 600px
+
+## Personalização de Atividades
+
+As atividades, valores de bits e duração de bloqueio podem ser configuradas no arquivo `config.json`.
+
+### Exemplo de configuração:
+
+```json
+{
+  "activities": {
+    "mining": {
+      "label": "Mineração",
+      "bits": 100,
+      "durationMinutes": 5,
+      "icon": "mining.png"
+    },
+    "fishing": {
+      "label": "Pesca",
+      "bits": 150,
+      "durationMinutes": 7,
+      "icon": "fishing.png"
+    }
+  }
+}
 ```
-npm run build
-```
 
-Os arquivos executáveis serão gerados na pasta `dist`.
+## Testes
+
+Para testar sem usar bits reais, acesse:
+
+- Listar atividades: `http://localhost:3001/teste/listar`
+- Simular doação: `http://localhost:3001/teste/bits/mining/100`
+
+## Requisitos
+
+- Node.js v14+
+- NPM ou Yarn
 
 ## Licença
 
