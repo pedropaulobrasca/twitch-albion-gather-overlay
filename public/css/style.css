@@ -1,0 +1,159 @@
+/* Estilos gerais */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Cabeçalho */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+/* Cards */
+.card {
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: none;
+}
+
+.card-header {
+    font-weight: 500;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Botões */
+.btn {
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: #6f42c1;
+    border-color: #6f42c1;
+}
+
+.btn-primary:hover {
+    background-color: #5a32a3;
+    border-color: #5a32a3;
+}
+
+/* Dashboard */
+.stats-card {
+    transition: transform 0.3s;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+}
+
+.stats-card .card-body {
+    padding: 1.25rem;
+}
+
+.stats-card .icon {
+    font-size: 2.5rem;
+    color: #6f42c1;
+}
+
+/* Configurações */
+.activity-item {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+}
+
+.activity-item.enabled {
+    border-left: 4px solid #28a745;
+}
+
+.activity-item.disabled {
+    border-left: 4px solid #dc3545;
+    opacity: 0.7;
+}
+
+/* Perfil de usuário */
+.profile-image {
+    border: 4px solid #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+
+/* Formulários */
+.form-control:focus {
+    border-color: #6f42c1;
+    box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
+}
+
+/* Tabelas */
+.table {
+    box-shadow: 0 0 10px rgba(0,0,0,.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+}
+
+/* Animações */
+.fade-in {
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+    
+    .card-body {
+        padding: 1.25rem;
+    }
+}
+
+/* Cores para Albion */
+.albion-primary {
+    color: #d4af37;
+}
+
+.albion-secondary {
+    color: #8a6d3b;
+}
+
+.bg-albion-primary {
+    background-color: #d4af37;
+}
+
+.bg-albion-secondary {
+    background-color: #8a6d3b;
+    color: white;
+}
+
+/* Customização de overlay */
+.preview-container {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    border-radius: 8px;
+    color: white;
+    margin-bottom: 20px;
+} 

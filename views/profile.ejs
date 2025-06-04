@@ -1,0 +1,77 @@
+<%- include('partials/header', { title: 'Perfil', user, active }); %>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Seu Perfil</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-4">
+                            <img src="<%= user.profileImageUrl %>" alt="Foto de perfil" class="img-fluid rounded-circle mb-3" style="max-width: 150px;">
+                            <h4><%= user.displayName %></h4>
+                            <p class="text-muted">
+                                <i class="bi bi-twitch text-primary"></i> <%= user.twitchUsername %>
+                            </p>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mb-4">
+                                <h5>Informações da Conta</h5>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>ID Twitch:</strong> <%= user.twitchId %></p>
+                                        <p><strong>E-mail:</strong> <%= user.email || 'Não disponível' %></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Conta criada em:</strong> <%= new Date(user.createdAt).toLocaleDateString('pt-BR') %></p>
+                                        <p>
+                                            <strong>Status da assinatura:</strong> 
+                                            <% if (user.subscription && user.subscription.active) { %>
+                                                <span class="badge bg-success">Ativa</span>
+                                            <% } else { %>
+                                                <span class="badge bg-warning">Inativa</span>
+                                            <% } %>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <% if (user.subscription && user.subscription.active) { %>
+                            <div class="mb-4">
+                                <h5>Detalhes da Assinatura</h5>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Plano:</strong> <%= user.subscription.planName || 'Standard' %></p>
+                                        <p><strong>Próxima cobrança:</strong> <%= new Date(user.subscription.currentPeriodEnd).toLocaleDateString('pt-BR') %></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>ID da assinatura:</strong> <%= user.subscription.id %></p>
+                                        <p><strong>Status:</strong> <%= user.subscription.status %></p>
+                                    </div>
+                                </div>
+                                <a href="/subscription" class="btn btn-primary mt-2">
+                                    <i class="bi bi-credit-card"></i> Gerenciar Assinatura
+                                </a>
+                            </div>
+                            <% } else { %>
+                            <div class="alert alert-info">
+                                <h5 class="alert-heading">Assine para desbloquear todos os recursos!</h5>
+                                <p>Obtenha acesso a todos os recursos premium do Albion Gather Overlay.</p>
+                                <a href="/subscription" class="btn btn-primary">
+                                    <i class="bi bi-credit-card"></i> Ver Planos
+                                </a>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer'); %> 

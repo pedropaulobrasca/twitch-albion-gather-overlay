@@ -1,0 +1,52 @@
+<%- include('partials/header', { title: 'URL do Overlay', user, active }); %>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">URL do Overlay</h5>
+                </div>
+                <div class="card-body">
+                    <p>Use a URL abaixo para adicionar o overlay à sua transmissão no OBS ou outro software de streaming:</p>
+                    
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="overlayUrl" value="<%= overlayUrl %>" readonly>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button" onclick="copyToClipboard()">Copiar</button>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info mt-3">
+                        <h6>Como usar:</h6>
+                        <ol>
+                            <li>Copie a URL acima</li>
+                            <li>No OBS, adicione uma nova fonte do tipo "Navegador"</li>
+                            <li>Cole a URL no campo de URL</li>
+                            <li>Defina a largura e altura desejadas (recomendado: 800x600)</li>
+                            <li>Clique em "OK" para salvar</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function copyToClipboard() {
+    const copyText = document.getElementById("overlayUrl");
+    copyText.select();
+    document.execCommand("copy");
+    
+    // Mostrar feedback
+    const button = document.querySelector('.input-group-append button');
+    const originalText = button.textContent;
+    button.textContent = 'Copiado!';
+    setTimeout(() => {
+        button.textContent = originalText;
+    }, 2000);
+}
+</script>
+
+<%- include('partials/footer'); %> 

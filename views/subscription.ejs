@@ -1,0 +1,228 @@
+<%- include('partials/header', { title: 'Assinatura', user, active }); %>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Planos de Assinatura</h5>
+                </div>
+                <div class="card-body">
+                    <% if (user.subscription && user.subscription.active) { %>
+                        <div class="alert alert-success">
+                            <h5 class="alert-heading">Você tem uma assinatura ativa!</h5>
+                            <p>Seu plano atual: <strong><%= user.subscription.planName || 'Standard' %></strong></p>
+                            <p>Válido até: <strong><%= new Date(user.subscription.currentPeriodEnd).toLocaleDateString('pt-BR') %></strong></p>
+                            
+                            <hr>
+                            
+                            <div class="d-flex">
+                                <form action="/subscription/cancel" method="POST" class="me-2">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja cancelar sua assinatura? Você poderá usar o serviço até o final do período atual.')">
+                                        <i class="bi bi-x-circle"></i> Cancelar Assinatura
+                                    </button>
+                                </form>
+                                
+                                <a href="/subscription/portal" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-gear"></i> Portal de Gerenciamento
+                                </a>
+                            </div>
+                        </div>
+                    <% } %>
+                    
+                    <div class="row justify-content-center mt-4">
+                        <!-- Plano Gratuito -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 border-primary">
+                                <div class="card-header bg-primary text-white text-center py-3">
+                                    <h5 class="mb-0">Plano Gratuito</h5>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <div class="text-center mb-4">
+                                        <span class="display-6">R$ 0</span>
+                                        <p class="text-muted">para sempre</p>
+                                    </div>
+                                    
+                                    <ul class="list-group list-group-flush mb-4">
+                                        <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Overlay básico</li>
+                                        <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Até 3 atividades</li>
+                                        <li class="list-group-item"><i class="bi bi-x-circle text-danger"></i> Personalização limitada</li>
+                                        <li class="list-group-item"><i class="bi bi-x-circle text-danger"></i> Sem eventos especiais</li>
+                                        <li class="list-group-item"><i class="bi bi-x-circle text-danger"></i> Sem suporte prioritário</li>
+                                    </ul>
+                                    
+                                    <div class="mt-auto text-center">
+                                        <button class="btn btn-outline-primary" disabled>Plano Atual</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Plano Standard -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 border-success">
+                                <div class="card-header bg-success text-white text-center py-3">
+                                    <h5 class="mb-0">Plano Standard</h5>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <div class="text-center mb-4">
+                                        <span class="display-6">R$ 19,90</span>
+                                        <p class="text-muted">por mês</p>
+                                    </div>
+                                    
+                                    <ul class="list-group list-group-flush mb-4">
+                                        <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Overlay avançado</li>
+                                        <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Atividades ilimitadas</li>
+                                        <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Personalização completa</li>
+                                        <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Eventos especiais</li>
+                                        <li class="list-group-item"><i class="bi bi-x-circle text-danger"></i> Sem suporte prioritário</li>
+                                    </ul>
+                                    
+                                    <div class="mt-auto text-center">
+                                        <button id="checkout-standard" class="btn btn-success" data-plan="standard">Assinar Agora</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Plano Premium -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 border-warning">
+                                <div class="card-header bg-warning text-dark text-center py-3">
+                                    <h5 class="mb-0">Plano Premium</h5>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <div class="text-center mb-4">
+                                        <span class="display-6">R$ 39,90</span>
+                                        <p class="text-muted">por mês</p>
+                                    </div>
+                                    
+                                    <ul class="list-group list-group-flush mb-4">
+                                        <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Tudo do plano Standard</li>
+                                        <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Overlays múltiplos</li>
+                                        <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Temas exclusivos</li>
+                                        <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Análise avançada</li>
+                                        <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Suporte prioritário</li>
+                                    </ul>
+                                    
+                                    <div class="mt-auto text-center">
+                                        <button id="checkout-premium" class="btn btn-warning" data-plan="premium">Assinar Agora</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">Perguntas Frequentes</h5>
+                </div>
+                <div class="card-body">
+                    <div class="accordion" id="accordionFAQ">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    Como funciona a cobrança?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                                <div class="accordion-body">
+                                    A cobrança é feita mensalmente de forma automática através do Stripe. Você pode cancelar a qualquer momento.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    Posso mudar de plano?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                                <div class="accordion-body">
+                                    Sim, você pode fazer upgrade ou downgrade do seu plano a qualquer momento. As mudanças serão aplicadas no próximo ciclo de cobrança.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    Como cancelar minha assinatura?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                                <div class="accordion-body">
+                                    Você pode cancelar sua assinatura a qualquer momento através do seu perfil ou entrando em contato com o suporte. Após o cancelamento, você continuará tendo acesso aos recursos premium até o final do período atual pago.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    const stripe = Stripe('<%= stripePublicKey %>');
+    
+    document.getElementById('checkout-standard').addEventListener('click', async function() {
+        try {
+            const response = await fetch('/subscription/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    plan: 'standard'
+                }),
+            });
+            
+            const session = await response.json();
+            
+            if (session.error) {
+                alert(session.error);
+                return;
+            }
+            
+            // Redirecionar para a página de checkout do Stripe
+            stripe.redirectToCheckout({ sessionId: session.id });
+        } catch (error) {
+            console.error('Erro ao processar o checkout:', error);
+            alert('Ocorreu um erro ao processar o checkout. Por favor, tente novamente.');
+        }
+    });
+    
+    document.getElementById('checkout-premium').addEventListener('click', async function() {
+        try {
+            const response = await fetch('/subscription/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    plan: 'premium'
+                }),
+            });
+            
+            const session = await response.json();
+            
+            if (session.error) {
+                alert(session.error);
+                return;
+            }
+            
+            // Redirecionar para a página de checkout do Stripe
+            stripe.redirectToCheckout({ sessionId: session.id });
+        } catch (error) {
+            console.error('Erro ao processar o checkout:', error);
+            alert('Ocorreu um erro ao processar o checkout. Por favor, tente novamente.');
+        }
+    });
+</script>
+
+<%- include('partials/footer'); %> 
